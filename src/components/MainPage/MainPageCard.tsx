@@ -1,10 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import React, { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 
 interface IButtonProps {
+    num: number,
     title: string,
     text: string
     image: string,
@@ -12,43 +14,62 @@ interface IButtonProps {
 }
 
 export function MainPageCard({
+    num,
     title,
     text,
     image,
     cardFooter
 }: IButtonProps) {
 
-    return (
-        <Container style={{
-            fontFamily: "'Comfortaa', cursive",
-            height: "100vh",
-            paddingTop: "150px"
-        }}>
-            <Row style={{ height: "150px" }}>
-                <Col style={{ fontSize: "50px" }}>{title}</Col>
-            </Row>
-            <Row>
-                <Col style={{ display: "flex", alignItems: "center" }}>
-                    {text}
-                </Col>
-                <Col>
-                    <img src={image} alt={title} style={{
-                        width: "500px",
-                        marginTop: "10px",
-                        borderRadius: "15px",
-                        border: "1px black solid"
-                    }} />
-                </Col>
+    const { ref, inView } = useInView({
+        /* Optional options */
+        threshold: 0,
+    });
+    const [opacity, setOpacity] = useState({ opacity: 0, transition: "opacity 1s" })
+    useEffect(() => {
+        inView ? setOpacity({ opacity: 1, transition: "opacity 1s" }) : setOpacity({ opacity: 0, transition: "opacity 1s" });
 
-            </Row>
-            <Row style={{ height: "150px" }}>
-                <Col style={{
-                    fontSize: "30px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                }}>{cardFooter}</Col>
-            </Row>
-        </Container>
+
+    }, [inView])
+    return (
+        <div style={opacity} >
+            <Container style={{
+                fontFamily: "'Comfortaa', cursive",
+                height: "100vh",
+                paddingTop: "150px"
+            }}>
+
+                <Row style={{ height: "150px" }}>
+                    <Col style={{ fontSize: "50px" }}>{title}</Col>
+                </Row>
+                <Row>
+                    <Col style={{ display: "flex", alignItems: "center" }}>
+                        {text}
+                    </Col>
+                    <Col>
+                        <img src={image} alt={title} style={{
+                            width: "500px",
+                            marginTop: "10px",
+                            borderRadius: "15px",
+                            border: "1px black solid"
+                        }} />
+                    </Col>
+
+                </Row>
+                <Row style={{ height: "150px" }}>
+                    <Col style={{
+                        fontSize: "30px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>{cardFooter}</Col>
+                </Row>
+                <Row style={{ height: "15px", marginBottom: "50px" }}>
+                    <Col ref={ref} style={{ fontSize: "30px" }}>-
+                        {num}  -</Col>
+                </Row>
+
+            </Container>
+        </div>
     )
 }
