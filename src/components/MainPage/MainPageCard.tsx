@@ -1,11 +1,13 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import "./MainPageCard.css"
 
 
 interface IButtonProps {
+    imgOrder?: CSSProperties,
     num: number,
     title: string,
     text: string
@@ -14,6 +16,7 @@ interface IButtonProps {
 }
 
 export function MainPageCard({
+    imgOrder,
     num,
     title,
     text,
@@ -27,12 +30,12 @@ export function MainPageCard({
     });
     const [opacity, setOpacity] = useState({ opacity: 0, transition: "opacity 1s" })
     useEffect(() => {
-        inView ? setOpacity({ opacity: 1, transition: "opacity 1s" }) : setOpacity({ opacity: 0, transition: "opacity 1s" });
+        inView ? setOpacity({ opacity: 1, transition: "opacity 2s" }) : setOpacity({ opacity: 0, transition: "opacity 1s" });
 
 
     }, [inView])
     return (
-        <div style={opacity} >
+        <div className='wrapper' style={opacity} >
             <Container style={{
                 fontFamily: "'Comfortaa', cursive",
                 height: "100vh",
@@ -46,7 +49,7 @@ export function MainPageCard({
                     <Col style={{ display: "flex", alignItems: "center" }}>
                         {text}
                     </Col>
-                    <Col>
+                    <Col style={imgOrder ? imgOrder : {}}>
                         <img src={image} alt={title} style={{
                             width: "500px",
                             marginTop: "10px",

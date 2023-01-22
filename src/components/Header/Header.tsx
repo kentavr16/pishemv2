@@ -6,8 +6,9 @@ import { Container } from 'react-bootstrap';
 export default function Header() {
 
     return (
-        <div >
+        <div>
             <Nav style={{
+                zIndex: 100,
                 border: "1px solid gray",
                 position: "fixed",
                 width: "100vw",

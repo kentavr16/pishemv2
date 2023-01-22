@@ -4,7 +4,10 @@
   text-align: center;
   background-color: #e2e2e2;
   width: 100%;
-
+  background-image: url("./res/bgroundMain.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  filter: grayscale(70%);
 }
 
 * {
